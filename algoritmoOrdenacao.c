@@ -2,13 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Funções de ordenação
 void merge(int *arr, int l, int m, int r);
 void mergeSort(int *arr, int l, int r);
 void quickSort(int *arr, int low, int high);
 int partition(int *arr, int low, int high);
 
-// Função para imprimir o vetor
 void printArray(int *arr, int size);
 
 int main() {
@@ -18,9 +16,8 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    // Determinar o número de elementos
     int size = 0;
-    int capacity = 1000;  // Capacidade inicial maior para evitar muitas realocações
+    int capacity = 1000;
     int *data1 = malloc(capacity * sizeof(int));
     int *data2 = malloc(capacity * sizeof(int));
     
@@ -30,14 +27,12 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    // Ler dados do arquivo e copiar para o segundo array
     while (fscanf(file, "%d", &data1[size]) != EOF) {
         if (size >= capacity) {
             capacity *= 2;
             int *temp1 = realloc(data1, capacity * sizeof(int));
             int *temp2 = realloc(data2, capacity * sizeof(int));
 
-            // Verificar se a realocação foi bem-sucedida
             if (temp1 == NULL || temp2 == NULL) {
                 free(data1);
                 free(data2);
@@ -49,29 +44,22 @@ int main() {
             data1 = temp1;
             data2 = temp2;
         }
-        data2[size] = data1[size]; // Copiar para o segundo vetor
+        data2[size] = data1[size];
         size++;
     }
 
     fclose(file);
-
-    // Exibir dados originais
-  //  printArray(data1, size);
-   // printf("\n");
-
-    // Ordenar usando Merge Sort
+  
     mergeSort(data1, 0, size - 1);
     printf("Merge Sort:\n");
     printArray(data1, size);
     printf("\n\n");
 
-    // Ordenar usando Quick Sort
     quickSort(data2, 0, size - 1);
     printf("Quick Sort:\n");
     printArray(data2, size);
     printf("\n\n");
 
-    // Liberar memória
     free(data1);
     free(data2);
 
